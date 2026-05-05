@@ -1,5 +1,4 @@
 import os
-from flask import Flask, request
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
     Application,
@@ -18,21 +17,10 @@ LINK_SEMANAL = "https://mpago.la/1LEY4CP"
 LINK_MENSAL = "https://mpago.la/2oL26cr"
 
 # ======================
-# FLASK APP
+# APPLICATION
 # ======================
 
-app = Flask(__name__)
 application = Application.builder().token(TOKEN).build()
-
-@app.route("/")
-def home():
-    return "🤖 Bot está rodando no Render!"
-
-@app.route(f"/{TOKEN}", methods=["POST"])
-def webhook():
-    update = Update.de_json(request.get_json(force=True), application.bot)
-    application.update_queue.put(update)
-    return "ok"
 
 # ======================
 # HANDLERS TELEGRAM
@@ -119,11 +107,4 @@ application.add_handler(CallbackQueryHandler(ja_paguei, pattern="^ja_paguei$"))
 # ======================
 
 if __name__ == "__main__":
-    import asyncio
-
-    async def run():
-        await application.initialize()
-        await application.start()
-        app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
-
-    asyncio.run(run())
+    application.run_polling()
