@@ -13,6 +13,15 @@ from telegram.ext import (
 
 TOKEN = os.getenv("TOKEN")  # Defina no Render como variável de ambiente
 
+# Debug: confirm what value TOKEN holds at startup
+print(f"[DEBUG] TOKEN value: {'SET (length=' + str(len(TOKEN)) + ')' if TOKEN else 'NOT SET / EMPTY'}")
+
+if not TOKEN:
+    raise RuntimeError(
+        "TOKEN environment variable is not set or is empty. "
+        "Please configure the TOKEN variable in your Railway service settings."
+    )
+
 LINK_SEMANAL = "https://mpago.la/1LEY4CP"
 LINK_MENSAL = "https://mpago.la/2oL26cr"
 
