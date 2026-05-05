@@ -71,6 +71,59 @@ async def previas(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     text = (
-        "🚫 *Este conteúdo não pode ser exibido fora do ambiente VIP.*\n\n"
-        "⚠️ *Prévia bloqueada por conter material sensível.*\n\n"
-        "O conteúdo completo:\n"
+        "🚫 *Este conteúdo não pode ser exibido fora do ambiente VIP\\.*\n\n"
+        "⚠️ *Prévia bloqueada por conter material sensível\\.*\n\n"
+        "O conteúdo completo está disponível apenas para membros VIP\\.\n\n"
+        "👇 Escolha um plano abaixo para ter acesso imediato:"
+    )
+
+    keyboard = [
+        [InlineKeyboardButton("Plano Semanal – R$19", url=LINK_SEMANAL)],
+        [InlineKeyboardButton("Plano Mensal – R$39 🔥", url=LINK_MENSAL)],
+        [InlineKeyboardButton("✅ Já paguei", callback_data="ja_paguei")],
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    await query.edit_message_text(
+        text=text,
+        reply_markup=reply_markup,
+        parse_mode="MarkdownV2"
+    )
+
+async def ja_paguei(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    text = (
+        "✅ *Pagamento recebido\\!*\n\n"
+        "Aguarde a confirmação e você será adicionado ao grupo VIP em breve\\.\n\n"
+        "Se ainda não foi adicionado, entre em contato com o suporte\\."
+    )
+
+    await query.edit_message_text(
+        text=text,
+        parse_mode="MarkdownV2"
+    )
+
+# ======================
+# REGISTRO DE HANDLERS
+# ======================
+
+application.add_handler(CommandHandler("start", start))
+application.add_handler(CallbackQueryHandler(previas, pattern="^previas$"))
+application.add_handler(CallbackQueryHandler(ja_paguei, pattern="^ja_paguei$"))
+
+# ======================
+# INICIALIZAÇÃO
+# ======================
+
+if __name__ == "__main__":
+    import asyncio
+
+    async def run():
+        await application.initialize()
+        await application.start()
+        app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+
+    asyncio.run(run())
