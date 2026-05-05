@@ -43,7 +43,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "✅ Conteúdos exclusivos\n"
         "✅ Material que não fica público\n"
         "✅ Comunidade restrita\n\n"
-        "⚡ A liberação ocorre automaticamente após a confirmação do pagamento.\n\n"
+        "⚡ A liberação ocorre automaticamente após a confirmação do pagamento\\.\n\n"
         "🔒 Pagamento 100% seguro via Mercado Pago\n\n"
         "👇 Escolha uma opção abaixo"
     )
