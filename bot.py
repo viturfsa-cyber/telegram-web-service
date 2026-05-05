@@ -63,6 +63,21 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="MarkdownV2"
     )
 
+    # ---------------------------------------------------------------
+    # VIDEO PROMOCIONAL — substitua a URL abaixo pela URL ou file_id
+    # do seu próprio vídeo antes de fazer o deploy.
+    #
+    # Exemplos:
+    #   Por URL:     video="https://seusite.com/video.mp4"
+    #   Por file_id: video="BAADAgADXgADO1wlS6Pn..."
+    # ---------------------------------------------------------------
+    VIDEO_URL = "https://example.com/video.mp4"  # ← TROQUE AQUI
+
+    await context.bot.send_video(
+        chat_id=update.effective_chat.id,
+        video=VIDEO_URL,
+    )
+
 async def previas(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
